@@ -1,0 +1,35 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+
+function App() {
+  const [quote, setQuote] = useState(null);
+
+  const getQuote = () => {
+    axios
+      .get("https://api.quotable.io/random")
+      .then((res) => {
+        setQuote(res.data.content);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getQuote();
+  }, []);
+
+  return (
+    <div className="App">
+      <h1>Random Quote Generator</h1>
+      {quote && (
+        <blockquote>
+          <p>{quote}</p>
+        </blockquote>
+      )}
+      <button onClick={getQuote}>Get New Quote</button>
+    </div>
+  );
+}
+
+export default App;
